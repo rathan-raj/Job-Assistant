@@ -6,7 +6,18 @@ import spacy
 import os
 import json
 
+from fastapi.middleware.cors import CORSMiddleware
+
 app = FastAPI(title="Job Assistant AI Engine")
+
+# Configure CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], # For phase 3 dev, allow all origins
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Load spaCy model for extracting relevant keywords (nouns, proper nouns, etc.)
 # Fallback to downloading it if not present
