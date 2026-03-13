@@ -1,0 +1,10 @@
+com/rathanraj/jobassistant/dto/JobApplicationDTO$Response.class
+com/rathanraj/jobassistant/dto/JobApplicationDTO.class
+com/rathanraj/jobassistant/dto/JobApplicationDTO$UpdateStatusRequest.class
+com/rathanraj/jobassistant/dto/JobApplicationDTO$CreateRequest.class
+com/rathanraj/jobassistant/repository/JobApplicationRepository.class
+com/rathanraj/jobassistant/model/JobApplication$ApplicationStatus.class
+com/rathanraj/jobassistant/dto/JobApplicationDTO$AnalyzeRequest.class
+com/rathanraj/jobassistant/dto/JobApplicationDTO$AnalyzeResponse.class
+com/rathanraj/jobassistant/JobAssistantApplication.class
+com/rathanraj/jobassistant/model/JobApplication.class

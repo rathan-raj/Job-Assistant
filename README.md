@@ -73,10 +73,3 @@ http://localhost:8080/swagger-ui.html
 ```
 
 ---
-
-## Phase Roadmap
-
-- ✅ **Phase 1** — Spring Boot Backend (this)
-- ⬜ **Phase 2** — Python NLP Engine (TF-IDF match scoring)
-- ⬜ **Phase 3** — React Dashboard
-- ⬜ **Phase 4** — Azure Deploy + CI/CD
