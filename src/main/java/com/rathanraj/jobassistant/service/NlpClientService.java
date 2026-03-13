@@ -23,7 +23,9 @@ public class NlpClientService {
     private final RestTemplate restTemplate = new RestTemplate();
 
     public AnalyzeResponse analyze(String jobDescription, String resumeText) {
-        String url = "http://localhost:8000/api/analyze";
+        String url = (nlpServiceUrl != null && !nlpServiceUrl.isBlank()) 
+            ? nlpServiceUrl + "/analyze" 
+            : "http://localhost:8000/api/analyze";
 
         try {
             log.info("Calling NLP service at {}", url);

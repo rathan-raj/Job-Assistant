@@ -41,7 +41,8 @@ function App() {
   // Fetch applications
   const fetchApplications = async () => {
     try {
-      const resp = await axios.get("http://localhost:8080/api/v1/applications");
+      const baseUrl = import.meta.env.VITE_JAVA_API_URL || 'http://localhost:8080';
+      const resp = await axios.get(`${baseUrl}/api/v1/applications`);
       setApplications(resp.data);
     } catch (e) {
       console.error("Failed to fetch applications:", e);
@@ -56,7 +57,8 @@ function App() {
     if (!companyName || !role) return;
     setIsSubmitting(true);
     try {
-      await axios.post("http://localhost:8080/api/v1/applications", {
+      const baseUrl = import.meta.env.VITE_JAVA_API_URL || 'http://localhost:8080';
+      await axios.post(`${baseUrl}/api/v1/applications`, {
         companyName: companyName,
         jobTitle: role,
         jobDescription: jobDesc,
@@ -83,7 +85,8 @@ function App() {
     setIsAnalyzing(true);
     setAnalysisResult(null);
     try {
-      const response = await axios.post('http://localhost:8000/api/analyze', {
+      const baseUrl = import.meta.env.VITE_PYTHON_API_URL || 'http://localhost:8000';
+      const response = await axios.post(`${baseUrl}/api/analyze`, {
         resume_text: resumeText,
         jd_text: jdText
       });
