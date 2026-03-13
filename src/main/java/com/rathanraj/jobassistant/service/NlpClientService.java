@@ -24,13 +24,12 @@ public class NlpClientService {
 
     public AnalyzeResponse analyze(String jobDescription, String resumeText) {
         String url = "http://localhost:8000/api/analyze";
-        
+
         try {
             log.info("Calling NLP service at {}", url);
             Map<String, String> payload = Map.of(
                     "jd_text", jobDescription != null ? jobDescription : "",
-                    "resume_text", resumeText != null ? resumeText : ""
-            );
+                    "resume_text", resumeText != null ? resumeText : "");
 
             @SuppressWarnings("unchecked")
             Map<String, Object> result = restTemplate.postForObject(

@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import { 
-  BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid 
+import {
+  BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid
 } from 'recharts';
-import { 
-  LayoutDashboard, 
-  Briefcase, 
-  FileText, 
-  TrendingUp, 
-  Target, 
-  PlusCircle, 
+import {
+  LayoutDashboard,
+  Briefcase,
+  FileText,
+  TrendingUp,
+  Target,
+  PlusCircle,
   MoreHorizontal,
   ChevronRight,
   Zap,
@@ -21,7 +21,7 @@ import axios from 'axios';
 function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
+
   // Real Data State
   const [applications, setApplications] = useState([]);
 
@@ -31,7 +31,7 @@ function App() {
   const [jobDesc, setJobDesc] = useState('');
   const [modalResume, setModalResume] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+
   // AI Analyzer State
   const [resumeText, setResumeText] = useState('');
   const [jdText, setJdText] = useState('');
@@ -70,7 +70,7 @@ function App() {
       setIsModalOpen(false);
       // Refetch
       fetchApplications();
-    } catch(e) {
+    } catch (e) {
       console.error("Error creating app:", e);
       alert("Failed to create application. Check backend connection.");
     } finally {
@@ -97,7 +97,7 @@ function App() {
   };
 
   const renderBadge = (status) => {
-    switch(status?.toLowerCase()) {
+    switch (status?.toLowerCase()) {
       case 'interview': return <span className="status-badge badge-interview"><span className="dot"></span>Interview</span>;
       case 'applied': return <span className="status-badge badge-applied"><span className="dot"></span>Applied</span>;
       case 'offer': return <span className="status-badge badge-offer"><span className="dot"></span>Offer</span>;
@@ -142,10 +142,10 @@ function App() {
 
   // Dynamic status counts
   const appsWithScores = applications.filter(a => a.matchScore);
-  const avgScore = appsWithScores.length 
+  const avgScore = appsWithScores.length
     ? Math.round(appsWithScores.reduce((sum, a) => sum + a.matchScore, 0) / appsWithScores.length)
     : 84;
-  
+
   const activeInterviews = applications.filter(a => a.status === 'INTERVIEW').length;
 
   return (
@@ -157,30 +157,30 @@ function App() {
           </div>
           <h1>JobEngine</h1>
         </div>
-        
+
         <nav className="nav-links">
-          <button 
+          <button
             className={`nav-item ${activeTab === 'dashboard' ? 'active' : ''}`}
             onClick={() => setActiveTab('dashboard')}
           >
             <LayoutDashboard size={20} />
             Dashboard
           </button>
-          <button 
+          <button
             className={`nav-item ${activeTab === 'applications' ? 'active' : ''}`}
             onClick={() => setActiveTab('applications')}
           >
             <Briefcase size={20} />
             Applications
           </button>
-          <button 
+          <button
             className={`nav-item ${activeTab === 'analyzer' ? 'active' : ''}`}
             onClick={() => setActiveTab('analyzer')}
           >
             <Target size={20} />
             AI Analyzer
           </button>
-          <button 
+          <button
             className={`nav-item ${activeTab === 'resumes' ? 'active' : ''}`}
             onClick={() => setActiveTab('resumes')}
           >
@@ -248,7 +248,7 @@ function App() {
                       <CartesianGrid strokeDasharray="3 3" stroke="#252a3f" vertical={false} />
                       <XAxis dataKey="name" stroke="#6b7692" axisLine={false} tickLine={false} />
                       <YAxis stroke="#6b7692" axisLine={false} tickLine={false} />
-                      <Tooltip 
+                      <Tooltip
                         contentStyle={{ backgroundColor: '#1a1d2d', borderColor: '#252a3f', borderRadius: '8px', color: '#f0f2f8' }}
                         itemStyle={{ color: '#b46bfa' }}
                         cursor={{ fill: 'rgba(255, 255, 255, 0.02)' }}
@@ -256,8 +256,8 @@ function App() {
                       <Bar dataKey="freq" fill="url(#colorUv)" radius={[6, 6, 0, 0]} maxBarSize={50} />
                       <defs>
                         <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="0%" stopColor="#b46bfa" stopOpacity={1}/>
-                          <stop offset="100%" stopColor="#6d5dfc" stopOpacity={0.8}/>
+                          <stop offset="0%" stopColor="#b46bfa" stopOpacity={1} />
+                          <stop offset="100%" stopColor="#6d5dfc" stopOpacity={0.8} />
                         </linearGradient>
                       </defs>
                     </BarChart>
@@ -272,7 +272,7 @@ function App() {
                     View All <ChevronRight size={16} />
                   </button>
                 </div>
-                
+
                 {applications.length === 0 ? (
                   <div style={{ color: 'var(--text-tertiary)', padding: '24px 0', textAlign: 'center' }}>
                     No applications added yet. Click 'New Application' to get started!
@@ -344,9 +344,9 @@ function App() {
               <div className="glass-panel col-12" style={{ marginBottom: "24px" }}>
                 <div className="form-group">
                   <label>Job Description Extract</label>
-                  <textarea 
-                    className="form-control" 
-                    rows="6" 
+                  <textarea
+                    className="form-control"
+                    rows="6"
                     placeholder="Paste the job description here..."
                     value={jdText}
                     onChange={(e) => setJdText(e.target.value)}
@@ -354,17 +354,17 @@ function App() {
                 </div>
                 <div className="form-group">
                   <label>Your Resume Extract</label>
-                  <textarea 
-                    className="form-control" 
-                    rows="6" 
+                  <textarea
+                    className="form-control"
+                    rows="6"
                     placeholder="Paste your resume content here..."
                     value={resumeText}
                     onChange={(e) => setResumeText(e.target.value)}
                   ></textarea>
                 </div>
-                <button 
-                  className="btn-primary" 
-                  onClick={handleAnalyze} 
+                <button
+                  className="btn-primary"
+                  onClick={handleAnalyze}
                   disabled={isAnalyzing || !jdText || !resumeText}
                   style={{ opacity: (isAnalyzing || !jdText || !resumeText) ? 0.6 : 1, width: '100%', justifyContent: 'center', marginTop: '12px' }}
                 >
@@ -375,9 +375,9 @@ function App() {
               {analysisResult && (
                 <div className="glass-panel col-12 animate-slide-up">
                   <h3 style={{ marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <Zap style={{ color: "var(--accent-secondary)" }}/> Analysis Results
+                    <Zap style={{ color: "var(--accent-secondary)" }} /> Analysis Results
                   </h3>
-                  
+
                   <div style={{ display: 'flex', gap: '40px', alignItems: 'flex-start' }}>
                     <div style={{ textAlign: 'center' }}>
                       <div className={`score-circle ${analysisResult.match_score >= 80 ? 'high' : analysisResult.match_score >= 60 ? 'medium' : 'low'}`} style={{ width: '120px', height: '120px', fontSize: '32px', border: '8px solid currentColor', margin: '0 auto 16px auto' }}>
@@ -399,7 +399,7 @@ function App() {
                           <span style={{ color: 'var(--success)' }}>Your resume matches all core keywords perfectly!</span>
                         )}
                       </div>
-                      
+
                       <div>
                         <h4 style={{ color: 'var(--text-primary)', marginBottom: '12px' }}>AI Suggested Improvements</h4>
                         <p style={{ color: 'var(--text-secondary)', background: 'var(--bg-tertiary)', padding: '16px', borderRadius: 'var(--radius-md)', borderLeft: '4px solid var(--accent-primary)' }}>
@@ -444,11 +444,11 @@ function App() {
               <div className="modal-body" style={{ maxHeight: '60vh', overflowY: 'auto' }}>
                 <div className="form-group">
                   <label>Company Name *</label>
-                  <input type="text" className="form-control" placeholder="e.g. Google" value={companyName} onChange={e => setCompanyName(e.target.value)}/>
+                  <input type="text" className="form-control" placeholder="e.g. Google" value={companyName} onChange={e => setCompanyName(e.target.value)} />
                 </div>
                 <div className="form-group">
                   <label>Role / Position *</label>
-                  <input type="text" className="form-control" placeholder="e.g. Senior Software Engineer" value={role} onChange={e => setRole(e.target.value)}/>
+                  <input type="text" className="form-control" placeholder="e.g. Senior Software Engineer" value={role} onChange={e => setRole(e.target.value)} />
                 </div>
                 <div className="form-group">
                   <label>Job Description</label>
@@ -461,7 +461,7 @@ function App() {
               </div>
               <div className="modal-footer">
                 <button className="btn-secondary" onClick={() => setIsModalOpen(false)} disabled={isSubmitting}>Cancel</button>
-                <button className="btn-primary" onClick={handleAddNewApp} disabled={isSubmitting || !companyName || !role} style={{opacity: (isSubmitting || !companyName || !role) ? 0.6 : 1}}>
+                <button className="btn-primary" onClick={handleAddNewApp} disabled={isSubmitting || !companyName || !role} style={{ opacity: (isSubmitting || !companyName || !role) ? 0.6 : 1 }}>
                   {isSubmitting ? <><Loader2 className="spinning" size={18} /> Saving & Analyzing...</> : <><Target size={18} /> Add Application & Analyze</>}
                 </button>
               </div>
