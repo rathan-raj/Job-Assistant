@@ -23,32 +23,30 @@ public class NlpClientService {
     private final RestTemplate restTemplate = new RestTemplate();
 
     public AnalyzeResponse analyze(String jobDescription, String resumeText) {
-        if (nlpServiceUrl == null || nlpServiceUrl.isBlank()) {
-            log.info("NLP service URL not configured — returning stub response");
-            return AnalyzeResponse.builder()
-                    .matchScore(null)
-                    .missingKeywords(null)
-                    .suggestions(null)
-                    .message("NLP analysis not available yet. Phase 2 Python service not connected.")
-                    .build();
-        }
-
+        String url = "http://localhost:8000/api/analyze";
+        
         try {
-            log.info("Calling NLP service at {}", nlpServiceUrl);
+            log.info("Calling NLP service at {}", url);
             Map<String, String> payload = Map.of(
-                    "job_description", jobDescription,
-                    "resume_text", resumeText
+                    "jd_text", jobDescription != null ? jobDescription : "",
+                    "resume_text", resumeText != null ? resumeText : ""
             );
 
-            // Phase 2: this will return matchScore, missingKeywords, suggestions
             @SuppressWarnings("unchecked")
             Map<String, Object> result = restTemplate.postForObject(
-                    nlpServiceUrl + "/analyze", payload, Map.class);
+                    url, payload, Map.class);
+
+            String missingStr = null;
+            if (result != null && result.get("missing_keywords") != null) {
+                @SuppressWarnings("unchecked")
+                java.util.List<String> missing = (java.util.List<String>) result.get("missing_keywords");
+                missingStr = String.join(", ", missing);
+            }
 
             return AnalyzeResponse.builder()
                     .matchScore(result != null ? (Double) result.get("match_score") : null)
-                    .missingKeywords(result != null ? (String) result.get("missing_keywords") : null)
-                    .suggestions(result != null ? (String) result.get("suggestions") : null)
+                    .missingKeywords(missingStr)
+                    .suggestions(result != null ? (String) result.get("suggested_improvements") : null)
                     .message("Analysis complete")
                     .build();
 
