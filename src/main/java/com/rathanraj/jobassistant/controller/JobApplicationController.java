@@ -18,7 +18,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "*")  // Allow React frontend in Phase 3
+@CrossOrigin(origins = "*") // Allow React frontend in Phase 3
 @Tag(name = "Job Applications", description = "Manage and track job applications")
 public class JobApplicationController {
 
