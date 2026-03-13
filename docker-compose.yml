@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: job_assistant_db
+    environment:
+      POSTGRES_DB: job_assistant
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: your_password_here
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # Phase 2: Uncomment when Python NLP service is ready
+  # nlp-service:
+  #   build: ./nlp-service
+  #   container_name: job_assistant_nlp
+  #   ports:
+  #     - "8000:8000"
+  #   environment:
+  #     - OPENAI_API_KEY=${OPENAI_API_KEY}
+
+volumes:
+  postgres_data:
